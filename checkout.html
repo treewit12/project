@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body>
+    <header>
+        <h1>ชำระเงิน</h1>
+    </header>
+    
+    <main>
+        <section class="checkout-container">
+            <h2>รายการสินค้า</h2>
+            <div id="checkout-items">
+                <!-- รายการสินค้าจะแสดงที่นี่ -->
+            </div>
+        </section>
+
+        <section class="checkout-container">
+            <h2>ข้อมูลการติดต่อ</h2>
+            <form id="checkout-form">
+                <label for="name">ชื่อ-นามสกุล:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">อีเมล:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="address">ที่อยู่:</label>
+                <textarea id="address" name="address" rows="4" required></textarea>
+
+                <label for="phone">เบอร์โทรศัพท์:</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <button type="submit">ยืนยันการสั่งซื้อ</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // ดึงข้อมูลสินค้าจาก localStorage
+        const checkoutItems = JSON.parse(localStorage.getItem('buyNowItem')) || [];
+        
+        const checkoutItemsContainer = document.getElementById('checkout-items');
+
+        // Function to render checkout items
+        const renderCheckoutItems = () => {
+            checkoutItemsContainer.innerHTML = ''; // Clear previous items
+            checkoutItems.forEach(item => {
+                const itemElement = `
+                    <div class="checkout-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="checkout-item-details">
+                            <h3>${item.name}</h3>
+                            <p>แบรนด์: ${item.brand}</p>
+                            <p>รหัสสินค้า: ${item.sku}</p>
+                            <p>ราคา: ฿${item.price.toFixed(2)}</p>
+                            <p>จำนวน: ${item.quantity}</p>
+                            <p>รวม: ฿${(item.price * item.quantity).toFixed(2)}</p>
+                        </div>
+                    </div>
+                `;
+                checkoutItemsContainer.innerHTML += itemElement;
+            });
+        };
+
+        // Event listener for form submission
+        document.getElementById('checkout-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            // Handle form submission
+            alert('Order confirmed!'); // For demo purposes
+            localStorage.removeItem('buyNowItem'); // Clear cart after checkout
+        });
+
+        // Render items on page load
+        renderCheckoutItems();
+    </script>
+</body>
+</html>

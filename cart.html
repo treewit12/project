@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="/css/cart.css">
+</head>
+<body>
+    <header>
+        <h1>ตะกร้าสินค้า</h1>
+    </header>
+    
+    <main>
+        <section class="cart-container">
+            <!-- ตรงนี้จะแสดงรายการสินค้าในตะกร้า -->
+        </section>
+
+        <section class="cart-summary">
+            <h2>สรุปยอด</h2>
+            <p>รวมทั้งหมด: <span id="total-price">฿0.00</span></p>
+            <button class="checkout-btn">ชำระเงิน</button>
+        </section>
+    </main>
+
+    <script>
+        // ดึงข้อมูลสินค้าจาก localStorage
+        let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        const cartContainer = document.querySelector('.cart-container');
+        const totalPriceElement = document.getElementById('total-price');
+        let totalPrice = 0;
+
+        // Function to update the total price
+        const updateTotalPrice = () => {
+            totalPrice = 0;
+            cartItems.forEach(item => {
+                totalPrice += item.price * item.quantity;
+            });
+            totalPriceElement.innerText = `฿${totalPrice.toFixed(2)}`;
+        };
+
+        // Function to render cart items
+        const renderCartItems = () => {
+            cartContainer.innerHTML = ''; // Clear previous items
+            cartItems.forEach((item, index) => {
+                const itemElement = `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}" style="width: 100px;">
+                        <div class="cart-item-details">
+                            <h3>${item.name}</h3>
+                            <p>ราคา: ฿${item.price.toFixed(2)}</p>
+                            <div class="quantity-control">
+                                <button class="decrease-btn" data-index="${index}">-</button>
+                                <input type="number" value="${item.quantity}" data-index="${index}" min="1" class="quantity-input" style="width: 40px;">
+                                <button class="increase-btn" data-index="${index}">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                cartContainer.innerHTML += itemElement;
+            });
+            updateTotalPrice();
+        };
+
+        // Increase item quantity
+        const increaseQuantity = (index) => {
+            cartItems[index].quantity += 1;
+            renderCartItems();
+        };
+
+        // Decrease item quantity
+        const decreaseQuantity = (index) => {
+            if (cartItems[index].quantity > 1) {
+                cartItems[index].quantity -= 1;
+                renderCartItems();
+            }
+        };
+
+        // Event listener for button clicks
+        cartContainer.addEventListener('click', (event) => {
+            if (event.target.classList.contains('increase-btn')) {
+                const index = event.target.getAttribute('data-index');
+                increaseQuantity(index);
+            } else if (event.target.classList.contains('decrease-btn')) {
+                const index = event.target.getAttribute('data-index');
+                decreaseQuantity(index);
+            }
+        });
+
+        // Event listener for checkout button
+        document.querySelector('.checkout-btn').addEventListener('click', () => {
+            window.location.href = 'checkout.html'; // Redirect to checkout.html
+        });
+
+        // Render items on page load
+        renderCartItems();
+    </script>
+</body>
+</html>
