@@ -1,0 +1,126 @@
+ /* General styles */
+ body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+header {
+    background-color: rgb(90, 90, 90);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+main {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Checkout container styling */
+.checkout-container {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #343a40;
+}
+
+/* Checkout items styling */
+.checkout-item {
+    display: flex;
+    padding: 15px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.checkout-item img {
+    width: 120px;
+    margin-right: 20px;
+}
+
+.checkout-item-details h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #343a40;
+}
+
+.checkout-item-details p {
+    margin: 5px 0;
+    color: #6c757d;
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #495057;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .checkout-item {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .checkout-item img {
+        margin-bottom: 10px;
+    }
+
+    .checkout-item-details {
+        text-align: center;
+    }
+
+    form {
+        padding: 10px;
+    }
+}
